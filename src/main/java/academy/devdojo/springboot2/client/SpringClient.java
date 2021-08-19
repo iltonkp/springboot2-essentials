@@ -4,8 +4,7 @@ import academy.devdojo.springboot2.domain.Anime;
 import academy.devdojo.springboot2.wrapper.PageableResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -15,7 +14,7 @@ import java.util.List;
 public class SpringClient {
 
     public static void main(String[] args) {
-
+        /*
         ResponseEntity<Anime> animeResponseEntity = new RestTemplate().getForEntity("http://localhost:8080/animes/{id}", Anime.class, 1);
         log.info("Response Entity {}", animeResponseEntity);
         log.info("Response Data {}", animeResponseEntity.getBody());
@@ -23,7 +22,7 @@ public class SpringClient {
         Anime anime = new  RestTemplate().getForObject("http://localhost:8080/animes/{id}", Anime.class, 1);
         log.info("Anime {}", anime);
 
-        /*
+
         Anime[] animeArray = new  RestTemplate().getForObject("http://localhost:8080/animes", Anime[].class);
         log.info("Anime Array {}", Arrays.toString(animeArray));
 
@@ -37,5 +36,21 @@ public class SpringClient {
 
         log.info("Anime List {}", exchangeList.getBody());
 
+        Anime overlord = Anime.builder().name("OverLord").url("http://overlord.com").build();
+        Anime overlordSave = new RestTemplate().postForObject("http://localhost:8080/animes", overlord, Anime.class);
+        log.info("Overlord Save ID:  {}", overlordSave.getId());
+
+        Anime stainsGate = Anime.builder().name("Stains Gate").url("http://stainsGate.com").build();
+        Anime stainsGateSave = new RestTemplate().exchange("http://localhost:8080/animes", HttpMethod.POST, new HttpEntity<>(stainsGate, createJsonHeader()), Anime.class ).getBody();
+        log.info("Stains Gate Save ID:  {}", stainsGateSave.getId());
+
+
+    }
+    private static HttpHeaders createJsonHeader(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        //... put anythings here.
+        return httpHeaders;
     }
 }
