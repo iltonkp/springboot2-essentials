@@ -44,6 +44,12 @@ public class SpringClient {
         Anime stainsGateSave = new RestTemplate().exchange("http://localhost:8080/animes", HttpMethod.POST, new HttpEntity<>(stainsGate, createJsonHeader()), Anime.class ).getBody();
         log.info("Stains Gate Save ID:  {}", stainsGateSave.getId());
 
+        stainsGateSave.setName("Stains Gate Zero");
+        ResponseEntity<Void> updatedSteinsGate =  new RestTemplate().exchange("http://localhost:8080/animes", HttpMethod.PUT, new HttpEntity<>(stainsGateSave, createJsonHeader()), Void.class);
+        log.info("Stains Gates updated status:  {}", updatedSteinsGate.getStatusCode());
+
+        ResponseEntity<Void> updatedSteinsGateDelete =  new RestTemplate().exchange("http://localhost:8080/animes/{id}", HttpMethod.DELETE, null , Void.class, stainsGateSave.getId());
+        log.info("Stains Gates deleted status:  {}", updatedSteinsGateDelete.getStatusCode());
 
     }
     private static HttpHeaders createJsonHeader(){
