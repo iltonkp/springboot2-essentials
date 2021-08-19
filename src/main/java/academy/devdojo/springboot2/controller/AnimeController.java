@@ -35,7 +35,7 @@ public class AnimeController {
     }
 
     @GetMapping(path = "/find")
-    public ResponseEntity<List<Anime>> findById(@RequestParam(value = "name") String name) {
+    public ResponseEntity<List<Anime>> findByName(@RequestParam(value = "name") String name) {
         return ResponseEntity.ok(animeService.findByName(name));
     }
 
@@ -45,7 +45,7 @@ public class AnimeController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> save(@PathVariable int id) {
+    public ResponseEntity<Void> delete(@PathVariable int id) {
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

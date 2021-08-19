@@ -12,10 +12,11 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
+import static academy.devdojo.springboot2.util.AnimeUtil.createAnimeToBeSave;
+
 
 @DataJpaTest
 @DisplayName("Anime Repository Tests")
-//@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AnimeRepositoryTest {
     @Autowired
     private AnimeRepository animeRepository;
@@ -23,7 +24,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save creates anime when successful")
     public void save_PersistAnime_WhenSuccessful() {
-        Anime anime = createAnime();
+        Anime anime = createAnimeToBeSave();
         Anime savedAnime = this.animeRepository.save(anime);
 
         Assertions.assertThat(savedAnime.getId()).isNotNull();
@@ -36,7 +37,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save updates anime when successful")
     public void save_UpdateAnime_WhenSuccessful() {
-        Anime anime = createAnime();
+        Anime anime = createAnimeToBeSave();
         Anime savedAnime = this.animeRepository.save(anime);
 
         savedAnime.setName("Anime Test Update");
@@ -54,7 +55,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Delete removes anime when successful")
     public void delete_RemoveAnime_WhenSuccessful() {
-        Anime anime = createAnime();
+        Anime anime = createAnimeToBeSave();
         Anime savedAnime = this.animeRepository.save(anime);
         this.animeRepository.delete(anime);
         Optional<Anime> animeOptional = this.animeRepository.findById(savedAnime.getId());
@@ -65,7 +66,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Find by name returns anime when successful")
     public void findByName_ReturnAnimes_WhenSuccessful() {
-        Anime anime = createAnime();
+        Anime anime = createAnimeToBeSave();
         Anime savedAnime = this.animeRepository.save(anime);
 
         String name = savedAnime.getName();
@@ -97,13 +98,4 @@ class AnimeRepositoryTest {
                 .withMessageContaining("The name of this anime cannot be empty.");
 
     }
-
-    private Anime createAnime() {
-        return Anime.builder()
-                .name("Anime Teste")
-                .url("http://animeteste.com")
-                .build();
-    }
-
-
 }
