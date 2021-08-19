@@ -22,15 +22,12 @@ public class AnimeController {
 
     private final AnimeService animeService;
 
-    @GetMapping
-    public ResponseEntity<List<Anime>> listAll() {
-        return ResponseEntity.ok(animeService.listAll());
-    }
 
-   // @GetMapping
-   // public ResponseEntity<Page<Anime>> listAll(Pageable pageable) {
-     //   return ResponseEntity.ok(animeService.listAll(pageable));
-  //  }
+
+    @GetMapping
+    public ResponseEntity<Page<Anime>> listAll(Pageable pageable) {
+        return ResponseEntity.ok(animeService.listAll(pageable));
+    }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable int id) {
