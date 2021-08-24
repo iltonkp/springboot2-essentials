@@ -33,7 +33,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.anyInt;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AnimeControllerTestIT {
+class AnimeControllerIT {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
